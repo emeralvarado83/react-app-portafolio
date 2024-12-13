@@ -261,8 +261,8 @@ header button svg {
 }
 
 .card {
-  width: 30%;
-  max-width: 275px;
+  /*width: 30%;
+  max-width: 275px;*/
   background-color: var(--bg-variant-color);
   border: 1px solid;
   border-color: var(--border-color);
@@ -272,6 +272,11 @@ header button svg {
   transition: transform 0.3s;
   display: flex;
   flex-direction: column;
+}
+
+/* Estilo para separar las cards en el slider de Slick React */
+.slick-slide > div {
+  margin: 0 20px;
 }
 
 .card:hover {
@@ -289,6 +294,17 @@ header button svg {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.card-content-lr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-content-r a {
+  color: #fff;
+  font-size: 18px;
 }
 
 .card-title {
@@ -475,6 +491,10 @@ footer {
 .project-info h2 {
   font-size: 24px;
   margin-bottom: 10px;
+}
+
+.project-info p {
+  margin-bottom: 12px;
 }
 
 .project-info span {

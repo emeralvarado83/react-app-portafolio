@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faCode, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase/firebaseConfig";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { NavLink } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Projects = () => {
-
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
@@ -32,24 +34,57 @@ const Projects = () => {
         return () => unsubscribe();
     }, []);
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        responsive: [
+            {
+              breakpoint: 992,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+      };
+
     return (
         <section className="projects" id="projects">
             <h2><FontAwesomeIcon icon={faCode}/> Proyectos</h2>
-            <div className="cards">
-                {
+            <div className="slider-container">
+                <Slider {...settings}>
+                    {
                     projects.map((project) => {
                         return(
-                            <div className="card" key={project.id}>
+                            <article className="card" key={project.id}>
                                 <NavLink to={`/proyecto/${project.id}`}>
                                     <img className="card-image" src={project.frontpage} alt={project.title}/>
                                 </NavLink>
                                 <div className="card-content">
-                                    <NavLink to={`/proyecto/${project.id}`}>
-                                        <h3 className="card-title">{project.title}</h3>
-                                    </NavLink>
-                                    <h5 className="card-subtitle">{project.subtitle}</h5>
+                                    <div className="card-content-lr">
+                                        <div className="card-content-l">
+                                            <NavLink to={`/proyecto/${project.id}`}>
+                                                <h3 className="card-title">{project.title}</h3>
+                                                <h5 className="card-subtitle">{project.subtitle}</h5>
+                                            </NavLink>
+                                        </div>
+                                        <div className="card-content-r">
+                                            <a href={project.link ? project.link : '#'} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a>
+                                        </div>
+                                    </div>
                                     <p className="card-description">
-                                        {project.description.substring(0, 90) + '...'}
+                                        {project.description.join(" ").substring(0, 90) + '...'}
                                     </p>
                                     <NavLink to={`/proyecto/${project.id}`} className="card-button">
                                         Ver mas
@@ -58,10 +93,11 @@ const Projects = () => {
                                         </svg>
                                     </NavLink>
                                 </div>
-                            </div>
+                            </article>
                         )
                     })
-                }
+                    }
+                </Slider>
             </div>
         </section>
     );

@@ -58,7 +58,15 @@ const Project = () => {
         <section className="project">
             <div className="project-info">
                 <h2 className="project-title">{project.title} - {project.subtitle && <span className="project-subtitle">{project.subtitle}</span>}</h2>
-                <p>{project.description}</p>
+                <>
+                    {
+                        project.description.map((parrafo, index) => {
+                            return(
+                                <p key={index}>{parrafo}</p>
+                            )
+                        })
+                    }
+                </>
             </div>
             <div className="project-pictures">
                 <h2>Galería</h2>
